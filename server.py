@@ -58,7 +58,3 @@ def login():
         return jsonify({"status": "success", "message": "Giriş başarılı"}), 200
     else:
         return jsonify({"status": "error", "message": "Kullanıcı adı veya şifre yanlış"}), 400
-
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))  # Render port
-    app.run(host="0.0.0.0", port=port, debug=False)
