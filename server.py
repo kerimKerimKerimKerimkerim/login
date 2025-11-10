@@ -36,11 +36,9 @@ def register():
 
     users = load_users()
     
-    # Kullanıcı adı mevcut mu?
     if any(u["username"] == username for u in users):
         return jsonify({"status": "error", "message": "Kullanıcı adı mevcut"}), 400
 
-    # Yeni kullanıcı ekle
     users.append({"username": username, "password": password})
     save_users(users)
 
@@ -62,4 +60,5 @@ def login():
         return jsonify({"status": "error", "message": "Kullanıcı adı veya şifre yanlış"}), 400
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))  # Render port
+    app.run(host="0.0.0.0", port=port, debug=False)
