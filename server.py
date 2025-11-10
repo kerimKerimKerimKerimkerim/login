@@ -3,7 +3,7 @@ import json, os
 
 app = Flask(__name__, static_folder='')
 
-DATA_FILE = "data.json"
+DATA_FILE = "/tmp/data.json"  # Yazma problemi olmaması için /tmp
 
 def load_users():
     if not os.path.exists(DATA_FILE):
@@ -15,16 +15,14 @@ def save_users(users):
     with open(DATA_FILE, "w", encoding="utf-8") as f:
         json.dump(users, f, indent=4)
 
-# HTML sayfalarını sun
 @app.route('/')
 def index():
-    return send_from_directory('', 'index.html')
+    return send_from_directory('.', 'index.html')
 
 @app.route('/register.html')
 def register_page():
-    return send_from_directory('', 'register.html')
+    return send_from_directory('.', 'register.html')
 
-# Kayıt endpoint
 @app.route("/register", methods=["POST"])
 def register():
     data = request.get_json()
@@ -44,7 +42,6 @@ def register():
 
     return jsonify({"status": "success", "message": "Kayıt başarılı"}), 200
 
-# Giriş endpoint
 @app.route("/login", methods=["POST"])
 def login():
     data = request.get_json()
